@@ -3,6 +3,11 @@ function new-ip {
 }
 curl -k -s https://api.mcsrvstat.us/2/$ip -O 
 
+if(test-path *server.json) {
+    echo 1
+     }else {
+        echo 0
+     }
 new-ip
 Get-Content .\$ip | % {$_ -replace "§","" } | Out-File .\$ip.server.json -Force
 Remove-Item .\$ip -Force
