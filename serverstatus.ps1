@@ -2,10 +2,11 @@
 curl -k -s https://api.mcsrvstat.us/2/$ip -O 
 
    
-if(test-path *server.json) {
+if(test-path .\*server.json) {
 
     $file=Get-Item .\*.server.json
-    echo $file.Basename.Basename
+    echo $file.Basename
+    
     } else {
    echo 0
      }
