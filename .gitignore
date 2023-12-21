@@ -1,2 +1,5 @@
 
 *.encrypted
+.vscode
+*.json
+*.xml
