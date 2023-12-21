@@ -1,23 +1,15 @@
+$date = (get-date).ToUniversalTime().ToString("dd-MM-yyyy,HH.mm.s")
+(test-path creds) ? $null : (mkdir creds)
 $MegaCreds = Get-Credential
-$credpath = "./creds/mega.encrypted"
-$MegaCreds | Export-Clixml -Path $credpath
-$credpath = Import-Clixml -Path $credpath
+$crednew = "./creds/creds.new"
+$MegaCreds | Export-Clixml -Path $crednew
+$creds = Import-Clixml -Path $crednew
+Rename-Item "$crednew" $creds.UserName
+#add $date
 
+#$creds.password | ConvertFrom-SecureString
 
-
-
-
-
-
-
-#$pw = Read-Host -AsSecureString
-#[pscredential]::new('user',$pw).GetNetworkCredential().Password
-#$pw | ConvertFrom-SecureString | Out-File -FilePath "./pass.encrypted"
-#$encStr = Get-Content "./pass.encrypted"
-#$encStr | ConvertFrom-SecureString 
-
-
-#echo "Please Enter Your Email Address" 
-# Read-Host -AsSecureString | ConvertFrom-SecureString | Out-File -FilePath "./mail.encrypted"
-# echo "Please Enter Your Password"
-# Read-Host -AsSecureString | ConvertFrom-SecureString | Out-File -FilePath "./pass.encrypted"
+$Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($creds.Password)
+$result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
+[System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
+$result
