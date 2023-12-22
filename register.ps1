@@ -7,7 +7,7 @@ $MegaCreds = Get-Credential
 $meganew = "./creds/mega/mega.new"
 $MegaCreds | Export-Clixml -Path $meganew
 #Compare-Object -ReferenceObject (Get-Content -Path $meganew) -DifferenceObject (Get-Content -Path .\Creds\Mega\*.xml) 
-# 
+
 
 $creds = Import-Clixml -Path $meganew
 $xmlname = $creds.username #+ $fileformat 
@@ -24,8 +24,8 @@ else {
 }
 
 #$creds.password | ConvertFrom-SecureString
-$Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($creds.Password)
-$result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
-[System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
-#$result
-Get-ChildItem -Recurse ".\creds" | Where { ! $_.PSIsContainer } | Select Name,FullName,Length
+# 
+# $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($creds.Password)
+# $result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
+# [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
+# #$result
