@@ -1,5 +1,21 @@
+function Get-DecryptedPassword {
+    param (
+        [securestring]$SecurePassword
+    )
+
+    $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($SecurePassword)
+    $DecryptedPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
+    [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
+
+    return $DecryptedPassword
+}
+
 $folderpath = ".\Creds"
 $services = Get-ChildItem -Path $folderpath -Recurse -Directory | Sort-Object Name
+
+# Define variables to store passwords
+$GitPassword = $null
+$MegaPassword = $null
 
 foreach ($service in $services) {
     $serviceName = $service.Name
@@ -34,12 +50,19 @@ foreach ($service in $services) {
     if ($selectedFile -ne $null) {
         $importedData = Import-Clixml -Path $selectedFile.FullName
 
-        # Your existing code block using $importedData
-        $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($importedData.Password)
-        $result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
-        [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
-
-        # Process $result or perform any additional actions
-        Write-Host "Password result: $result"
+        # Store passwords in respective variables based on the service name
+        switch ($serviceName) {
+            'Git' {
+                $GitPassword = Get-DecryptedPassword -SecurePassword $importedData.Password
+            }
+            'Mega' {
+                $MegaPassword = Get-DecryptedPassword -SecurePassword $importedData.Password
+            }
+            # Add more cases for other services if needed
+        }
     }
 }
+
+# Use the passwords as needed, e.g., $GitPassword and $MegaPassword
+Write-Host "Git Password: $GitPassword"
+Write-Host "Mega Password: $MegaPassword"
