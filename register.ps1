@@ -22,10 +22,3 @@ else {
     "User Exists, Would you like to overwrite?"
     Move-Item "$meganew" "$xmlname.xml" -Force -Confirm
 }
-
-#$creds.password | ConvertFrom-SecureString
-# 
-# $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($creds.Password)
-# $result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
-# [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
-# #$result
