@@ -66,9 +66,9 @@ foreach ($service in $services) {
         }
     }
 }
-
-# Use the usernames and passwords as needed
-Write-Host "Git Username: $GitUsername"
-Write-Host "Git Password: $GitPassword"
-Write-Host "Mega Username: $MegaUsername"
-Write-Host "Mega Password: $MegaPassword"
+# 
+# # Use the usernames and passwords as needed
+# Write-Host "Git Username: $GitUsername"
+# Write-Host "Git Password: $GitPassword"
+# Write-Host "Mega Username: $MegaUsername"
+# Write-Host "Mega Password: $MegaPassword"
