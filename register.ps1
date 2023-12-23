@@ -1,3 +1,5 @@
+(test-path Creds) ? $null : (mkdir Creds\Mega, Creds\Git)
+
 while ($true) {
     # Prompt the user to choose between Mega, Git, or exit
     Write-Host "Choose service (`1` for Mega,` 2` for Git,` 0` to exit)"
@@ -67,9 +69,9 @@ while ($true) {
         else {
             "User Exists for $service, Would you like to overwrite?"
             # Move the new file to the desired location, overwriting the existing one if confirmed
-            Move-Item $newCredsPath "$xmlname.xml" -Force -Confirm
+            Move-Item $newCredsPath "$xmlname.xml" -Force -Confirm 
             
         }
-    Remove-Item $newCredsPath -Force 
+        (Remove-Item $newCredsPath -Force -Erroraction 'silentlycontinue')
     }
 }

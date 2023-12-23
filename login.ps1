@@ -1,15 +1,15 @@
 # Check if the 'Creds' directory exists, if not, create it along with 'Mega' and 'Git' subdirectories
-(test-path .\Creds) ? $null : (mkdir .\Creds\Mega, .\Creds\Git)
+(test-path Creds) ? $null : (mkdir Creds\Mega, Creds\Git)
 
 # Check if there are any .xml files inside the 'Creds' folder recursively
-$xmlFiles = Get-ChildItem -Path ".\Creds" -Recurse -Filter *.xml
+$xmlFiles = Get-ChildItem -Path "Creds" -Recurse -Filter *.xml
 
 if (-not $xmlFiles) {
-    Write-Host "No User credential files found. Running registration script..."
-    & "register.ps1"
+    Write-Host "No Credential files found. Running registration script..."
+    & ".\register.ps1"
 }
 else {
-    Write-Host "User credential files found. Proceeding with login..."
+    Write-Host "Credential files found. Proceeding with login..."
     # The rest of your login script goes here
     # ...
 }
