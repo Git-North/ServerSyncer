@@ -1,6 +1,3 @@
-# Check if the 'Creds' directory exists, if not, create it along with 'Mega' and 'Git' subdirectories
-(test-path Creds) ? $null : (mkdir Creds\Mega, Creds\Git)
-
 while ($true) {
     # Prompt the user to choose between Mega, Git, or exit
     Write-Host "Choose service (`1` for Mega,` 2` for Git,` 0` to exit)"
