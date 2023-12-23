@@ -13,8 +13,10 @@ function Get-DecryptedPassword {
 $folderpath = ".\Creds"
 $services = Get-ChildItem -Path $folderpath -Recurse -Directory | Sort-Object Name
 
-# Define variables to store passwords
+# Define variables to store usernames and passwords
+$GitUsername = $null
 $GitPassword = $null
+$MegaUsername = $null
 $MegaPassword = $null
 
 foreach ($service in $services) {
@@ -50,12 +52,14 @@ foreach ($service in $services) {
     if ($selectedFile -ne $null) {
         $importedData = Import-Clixml -Path $selectedFile.FullName
 
-        # Store passwords in respective variables based on the service name
+        # Store usernames and passwords in respective variables based on the service name
         switch ($serviceName) {
             'Git' {
+                $GitUsername = $selectedFileName
                 $GitPassword = Get-DecryptedPassword -SecurePassword $importedData.Password
             }
             'Mega' {
+                $MegaUsername = $selectedFileName
                 $MegaPassword = Get-DecryptedPassword -SecurePassword $importedData.Password
             }
             # Add more cases for other services if needed
@@ -63,6 +67,8 @@ foreach ($service in $services) {
     }
 }
 
-# Use the passwords as needed, e.g., $GitPassword and $MegaPassword
+# Use the usernames and passwords as needed
+Write-Host "Git Username: $GitUsername"
 Write-Host "Git Password: $GitPassword"
+Write-Host "Mega Username: $MegaUsername"
 Write-Host "Mega Password: $MegaPassword"
